@@ -1146,7 +1146,7 @@ detect_pipe_mode() {
 
 # Main entry point
 main() {
-    local command="${1:-}"
+    local command="${1:-install}"
 
     # If no command provided, decide based on how we're running
     if [[ -z "$command" ]]; then
