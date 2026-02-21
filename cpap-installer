@@ -1135,9 +1135,29 @@ show_logs() {
         log_warning "Could not retrieve logs. Make sure the service has been started at least once."
 }
 
+# Detect if running via pipe (curl | bash)
+detect_pipe_mode() {
+    # If stdin is not a terminal, we're likely running via curl | bash
+    if [[ ! -t 0 ]]; then
+        return 0
+    fi
+    return 1
+}
+
 # Main entry point
 main() {
-    local command="${1:-help}"
+    local command="${1:-}"
+
+    # If no command provided, decide based on how we're running
+    if [[ -z "$command" ]]; then
+        if detect_pipe_mode; then
+            # Running via: curl ... | bash → auto-install
+            command="install"
+        else
+            # Running directly without arguments → show help
+            command="help"
+        fi
+    fi
 
     case "$command" in
         install|update|upgrade)
