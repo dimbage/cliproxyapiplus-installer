@@ -778,7 +778,7 @@ make_executable() {
 
     if [[ -n "$binary" ]]; then
         chmod +x "$binary"
-        log_success "Made ${        log_success "Made ${DISPLAY_NAME} binary executable: $(basename "$binary")"
+        log_success "Made ${DISPLAY_NAME} binary executable: $(basename "$binary")"
     fi
 }
 
